@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&amp;family=Inter:wght@400;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#474747",
+                        "tertiary-container": "#1a1b1f",
+                        "on-tertiary-container": "#838388",
+                        "background": "#f9f9f9",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed": "#e2e2e2",
+                        "surface-container-low": "#f3f3f3",
+                        "surface-container": "#eeeeee",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#cfc4c5",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#1a1b1f",
+                        "tertiary": "#000000",
+                        "secondary": "#a33800",
+                        "on-secondary-container": "#fffbff",
+                        "surface-tint": "#5e5e5e",
+                        "secondary-fixed": "#ffdbce",
+                        "surface": "#f9f9f9",
+                        "surface-dim": "#dadada",
+                        "inverse-on-surface": "#f1f1f1",
+                        "primary": "#000000",
+                        "inverse-surface": "#2f3131",
+                        "on-primary-container": "#848484",
+                        "outline": "#7e7576",
+                        "on-secondary-fixed": "#370e00",
+                        "on-surface-variant": "#4c4546",
+                        "on-secondary-fixed-variant": "#802a00",
+                        "primary-container": "#1b1b1b",
+                        "tertiary-fixed-dim": "#c6c6cb",
+                        "surface-bright": "#f9f9f9",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#c6c6c6",
+                        "on-tertiary-fixed-variant": "#46464b",
+                        "secondary-container": "#cd4800",
+                        "on-surface": "#1a1c1c",
+                        "on-background": "#1a1c1c",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#1b1b1b",
+                        "surface-container-highest": "#e2e2e2",
+                        "tertiary-fixed": "#e3e2e7",
+                        "primary-fixed-dim": "#c6c6c6",
+                        "surface-variant": "#e2e2e2",
+                        "secondary-fixed-dim": "#ffb59a",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e8e8e8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-padding": "160px",
+                        "grid-columns": "12",
+                        "gutter": "24px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "20px",
+                        "baseline": "8px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Archivo Narrow"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Archivo Narrow"],
+                        "label-caps": ["Inter"],
+                        "mono-meta": ["Inter"],
+                        "headline-lg-mobile": ["Archivo Narrow"],
+                        "display-lg": ["Archivo Narrow"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "headline-lg": ["64px", { "lineHeight": "72px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "letterSpacing": "0em", "fontWeight": "500" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "mono-meta": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "display-lg": ["120px", { "lineHeight": "110px", "letterSpacing": "-0.04em", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background text-on-background antialiased font-body-md selection:bg-secondary selection:text-white">
+    <!-- Wayfinding Scroll Progress -->
+    <div class="fixed top-0 left-0 h-1 bg-secondary z-[100] transition-all duration-300" style="width: 0%"></div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="menuOverlay"></div>
+
+    <!-- Mobile Menu Panel -->
+    <div class="fixed top-0 right-0 h-full w-[85%] max-w-[400px] bg-surface dark:bg-background z-50 transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto p-8 pt-20 shadow-2xl"
+        id="mobileMenu">
+        <button
+            class="absolute top-4 right-4 p-2 hover:bg-surface-container-highest rounded-full transition-colors duration-200"
+            id="closeMenu" aria-label="Close menu">
+            <span class="material-symbols-outlined text-2xl">close</span>
+        </button>
+        <nav class="flex flex-col gap-2">
+            <!-- Home Link -->
+            <a class="mobile-menu-item block py-3 px-2 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant hover:text-primary dark:hover:text-on-background hover:bg-surface-container-low rounded transition-colors duration-200"
+                href="index.html">Home</a>
+
+            <!-- Portfolio Dropdown in Mobile -->
+            <div class="mobile-dropdown border-b border-surface-container-highest dark:border-on-primary-fixed-variant">
+                <button
+                    class="mobile-dropdown-toggle w-full flex items-center justify-between py-3 px-2 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant hover:text-primary dark:hover:text-on-background hover:bg-surface-container-low rounded transition-colors duration-200">
+                    <span>Portfolio</span>
+                    <span class="material-symbols-outlined text-sm transition-transform duration-200">expand_more</span>
+                </button>
+                <div class="mobile-dropdown-menu hidden pl-4 space-y-1 pb-2">
+                    <a class="block py-2 px-2 font-body-md text-body-md text-on-surface-variant hover:text-primary dark:hover:text-on-background hover:bg-surface-container-low rounded transition-colors duration-200"
+                        href="portfolio.html">All Projects</a>
+                    <a class="block py-2 px-2 font-body-md text-body-md text-on-surface-variant hover:text-primary dark:hover:text-on-background hover:bg-surface-container-low rounded transition-colors duration-200"
+                        href="portfolio-detail.html">Project Detail</a>
+                </div>
+            </div>
+
+            <!-- Blog Dropdown in Mobile -->
+            <div class="mobile-dropdown border-b border-surface-container-highest dark:border-on-primary-fixed-variant">
+                <button
+                    class="mobile-dropdown-toggle w-full flex items-center justify-between py-3 px-2 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant hover:text-primary dark:hover:text-on-background hover:bg-surface-container-low rounded transition-colors duration-200">
+                    <span>Blog</span>
+                    <span class="material-symbols-outlined text-sm transition-transform duration-200">expand_more</span>
+                </button>
+                <div class="mobile-dropdown-menu hidden pl-4 space-y-1 pb-2">
+                    <a class="block py-2 px-2 font-body-md text-body-md text-on-surface-variant hover:text-primary dark:hover:text-on-background hover:bg-surface-container-low rounded transition-colors duration-200"
+                        href="blog.html">All Posts</a>
+                    <a class="block py-2 px-2 font-body-md text-body-md text-on-surface-variant hover:text-primary dark:hover:text-on-background hover:bg-surface-container-low rounded transition-colors duration-200"
+                        href="blog-single.html">Post Detail</a>
+                </div>
+            </div>
+
+            <a class="mobile-menu-item block py-3 px-2 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant hover:text-primary dark:hover:text-on-background hover:bg-surface-container-low rounded transition-colors duration-200"
+                href="#">About</a>
+            <a class="mobile-menu-item block py-3 px-2 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant hover:text-primary dark:hover:text-on-background hover:bg-surface-container-low rounded transition-colors duration-200"
+                href="contact.html">Contact</a>
+
+            <a href="contact.html"
+                class="mt-4 w-full text-center font-label-caps text-label-caps uppercase border-2 border-primary px-6 py-3 hover:bg-secondary hover:text-on-secondary transition-colors duration-200 rounded">
+                Get in Touch
+            </a>
+        </nav>
+    </div>
+
+    <!-- TopAppBar -->
+    <header
+        class="fixed top-0 left-0 w-full z-50 bg-surface dark:bg-background border-b-2 border-primary dark:border-on-primary-fixed-variant flex justify-between items-center px-margin-desktop py-baseline max-w-full">
+        <a href="index.html"
+            class="text-headline-md font-headline-md font-bold text-primary dark:text-on-background hover:text-secondary transition-colors duration-200">EXHIBIT</a>
+
+        <!-- Desktop Navigation with Dropdowns -->
+        <nav class="desktop-nav hidden md:flex gap-8 items-center">
+            <a class="font-label-caps text-label-caps uppercase tracking-widest text-primary dark:text-on-background border-b-2 border-secondary"
+                href="index.html">Home</a>
+
+            <!-- Portfolio Dropdown -->
+            <div class="relative group">
+                <button
+                    class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-on-background transition-colors duration-200 flex items-center gap-1 group">
+                    Portfolio
+                    <span
+                        class="material-symbols-outlined text-sm transition-transform duration-200 group-hover:rotate-180">expand_more</span>
+                </button>
+                <div
+                    class="absolute top-full left-0 mt-2 w-56 bg-surface dark:bg-background border border-surface-container-highest dark:border-on-primary-fixed-variant shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <a href="portfolio.html"
+                        class="block px-6 py-3 font-body-md text-body-md text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-low dark:hover:bg-tertiary-container hover:text-primary dark:hover:text-on-background transition-colors duration-200 border-b border-surface-container-highest dark:border-on-primary-fixed-variant">
+                        All Projects
+                        <span
+                        class="ml-2 inline-flex items-center bg-primary text-white text-xs px-2 py-0.5 rounded-full">PRO</span>
+                    </a>
+                    <a href="portfolio-detail.html"
+                        class="block px-6 py-3 font-body-md text-body-md text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-low dark:hover:bg-tertiary-container hover:text-primary dark:hover:text-on-background transition-colors duration-200">
+                        Project Detail
+                        <span
+                        class="ml-2 inline-flex items-center bg-primary text-white text-xs px-2 py-0.5 rounded-full">PRO</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Blog Dropdown -->
+            <div class="relative group">
+                <button
+                    class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-on-background transition-colors duration-200 flex items-center gap-1 group">
+                    Blog
+                    <span
+                        class="material-symbols-outlined text-sm transition-transform duration-200 group-hover:rotate-180">expand_more</span>
+                </button>
+                <div
+                    class="absolute top-full left-0 mt-2 w-56 bg-surface dark:bg-background border border-surface-container-highest dark:border-on-primary-fixed-variant shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <a href="blog.html"
+                        class="block px-6 py-3 font-body-md text-body-md text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-low dark:hover:bg-tertiary-container hover:text-primary dark:hover:text-on-background transition-colors duration-200 border-b border-surface-container-highest dark:border-on-primary-fixed-variant">
+                        All Posts
+                        <span
+                        class="ml-2 inline-flex items-center bg-primary text-white text-xs px-2 py-0.5 rounded-full">PRO</span>
+                    </a>
+                    <a href="blog-single.html"
+                        class="block px-6 py-3 font-body-md text-body-md text-on-surface-variant dark:text-on-tertiary-container hover:bg-surface-container-low dark:hover:bg-tertiary-container hover:text-primary dark:hover:text-on-background transition-colors duration-200">
+                        Post Detail
+                        <span
+                        class="ml-2 inline-flex items-center bg-primary text-white text-xs px-2 py-0.5 rounded-full">PRO</span>
+                    </a>
+                </div>
+            </div>
+
+            <a class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-on-background transition-colors duration-200"
+                href="#">About</a>
+            <a class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-on-background transition-colors duration-200"
+                href="contact.html">Contact</a>
+        </nav>
+
+        <div class="flex items-center gap-4">
+            <a href="contact.html"
+                class="desktop-contact-btn font-label-caps text-label-caps uppercase border-2 border-primary px-6 py-2 hover:bg-secondary hover:text-on-secondary transition-colors duration-200">Contact</a>
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="pt-40 pb-20 px-margin-desktop min-h-screen flex flex-col justify-end" style="background: url(assets/images/virtual.svg); background-size: cover; background-position: center; background-color: rgba(255, 255, 255, 0.6);">            <div class="grid grid-cols-12 gap-gutter">
+                <div class="col-span-12 md:col-span-10">
+                    <h1 class="font-display-lg text-display-lg uppercase tracking-tighter mb-12">
+                        Architecting <br />
+                        <span class="text-secondary">Spatial Narratives</span>.
+                    </h1>
+                </div>
+                <div class="col-span-12 md:col-span-4 border-t-2 border-primary pt-6">
+                    <p class="font-body-lg text-body-lg text-on-surface-variant mb-8">
+                        Interdisciplinary design practice focusing on the intersection of physical space, light, and
+                        information flow. We transform environments into intellectual journeys.
+                    </p>
+                    <button class="font-label-caps text-label-caps uppercase flex items-center gap-4 group">
+                        Explore Methodology
+                        <span
+                            class="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 01. Major Installations -->
+        <section class="py-section-padding bg-surface-container-lowest" id="installations">
+            <div class="px-margin-desktop mb-20 flex justify-between items-baseline flex-wrap gap-4">
+                <h2 class="font-headline-lg text-headline-lg uppercase flex items-center gap-6">
+                    <span class="font-mono-meta text-mono-meta text-secondary">01.</span> Major Installations
+                </h2>
+                <span class="font-label-caps text-label-caps text-on-surface-variant">SELECTED WORKS 2020-2024</span>
+            </div>
+            <div class="space-y-gutter">
+                <!-- Project 1 -->
+                <div class="w-full">
+                    <img alt="Project Alpha"
+                        class="w-full aspect-[21/9] object-cover filter grayscale hover:grayscale-0 transition-all duration-700 cursor-crosshair"
+                        data-alt="A massive, high-contrast black and white photography exhibition in a stark, industrial concrete gallery. The large-scale prints are suspended from the ceiling using thin steel wires, creating a rhythmic spatial flow. Sharp, angular shadows from professional gallery spot lighting fall across the polished gray concrete floor. The overall aesthetic is brutalist and minimalist, echoing a modern architectural museum atmosphere."
+                        src="assets/images/project-alpha.jpg" />
+                    <div
+                        class="px-margin-desktop py-6 border-b border-primary flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <span
+                                class="font-label-caps text-label-caps bg-primary text-white px-2 py-1 mr-4">MUSEUM</span>
+                            <h3 class="inline font-headline-md text-headline-md">The Monolith Experience</h3>
+                        </div>
+                        <p class="font-mono-meta text-mono-meta uppercase">Berlin, DE • 2023</p>
+                    </div>
+                </div>
+                <!-- Project 2: Asymmetric Grid -->
+                <div class="px-margin-desktop grid grid-cols-12 gap-gutter py-12">
+                    <div class="col-span-12 md:col-span-7">
+                        <img alt="Interior Detail" class="w-full aspect-square object-cover mb-4"
+                            data-alt="Close-up detail of a contemporary museum interior featuring raw concrete walls and a striking signal orange architectural element. The composition highlights the geometric intersection of materials, with soft natural light diffusing through high skylights. The mood is silent, structured, and intentional, capturing the architectural minimalist soul of the design practice."
+                            src="assets/images/interior-detail.jpg" />
+                        <h3 class="font-headline-md text-headline-md">Material Tension I</h3>
+                    </div>
+                    <div class="col-span-12 md:col-span-5 flex flex-col justify-end pb-24 md:pb-24">
+                        <div class="border-l-2 border-secondary pl-8">
+                            <p class="font-body-md text-body-md mb-8 italic">
+                                "The visitor is not just an observer; they are a variable in the spatial equation. We
+                                design the silence between the exhibits."
+                            </p>
+                            <span class="font-label-caps text-label-caps uppercase text-on-surface-variant">— Lead
+                                Designer, Exhibit</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02. Spatial Flow -->
+        <section class="py-section-padding px-margin-desktop bg-primary text-white" id="space">
+            <div class="grid grid-cols-12 gap-gutter mb-20">
+                <div class="col-span-12 md:col-span-6">
+                    <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase mb-8">
+                        <span class="text-secondary">02.</span> Spatial Flow
+                    </h2>
+                </div>
+                <div class="col-span-12 md:col-span-5 col-start-8">
+                    <p class="font-body-lg text-body-lg text-primary-fixed">
+                        Our mapping process involves rigorous analysis of psychological triggers and physical
+                        bottlenecks. We use 'Narrative Nodes' to anchor the visitor's focus.
+                    </p>
+                </div>
+            </div>
+            <div
+                class="relative w-full aspect-[16/6] bg-primary-container overflow-hidden border border-on-primary-fixed-variant">
+                <!-- Conceptual Diagram Grid -->
+                <div class="absolute inset-0 grid grid-cols-12 opacity-20">
+                    <div class="border-r border-white/20 h-full"></div>
+                    <div class="border-r border-white/20 h-full"></div>
+                    <div class="border-r border-white/20 h-full"></div>
+                    <div class="border-r border-white/20 h-full"></div>
+                    <div class="border-r border-white/20 h-full"></div>
+                    <div class="border-r border-white/20 h-full"></div>
+                    <div class="border-r border-white/20 h-full"></div>
+                    <div class="border-r border-white/20 h-full"></div>
+                    <div class="border-r border-white/20 h-full"></div>
+                    <div class="border-r border-white/20 h-full"></div>
+                    <div class="border-r border-white/20 h-full"></div>
+                    <div class="border-r border-white/20 h-full"></div>
+                </div>
+                <!-- Flow Path Illustration -->
+                <svg class="absolute inset-0 w-full h-full" preserveaspectratio="none">
+                    <path d="M 0 300 Q 400 50 800 300 T 1600 200" fill="none" stroke="#a33800" stroke-dasharray="12,12"
+                        stroke-width="4"></path>
+                    <circle cx="20%" cy="50%" fill="#a33800" r="8"></circle>
+                    <circle cx="50%" cy="40%" fill="#a33800" r="8"></circle>
+                    <circle cx="85%" cy="60%" fill="#a33800" r="8"></circle>
+                </svg>
+                <div
+                    class="absolute bottom-10 left-10 flex flex-wrap gap-8 md:gap-12 font-mono-meta text-mono-meta uppercase tracking-widest text-primary-fixed">
+                    <div class="flex flex-col"><span class="text-secondary">01</span> Entry / Compression</div>
+                    <div class="flex flex-col"><span class="text-secondary">02</span> The Narrative Void</div>
+                    <div class="flex flex-col"><span class="text-secondary">03</span> Sensory Release</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03. Material Archive -->
+        <section class="py-section-padding px-margin-desktop" id="archive">
+            <div class="flex justify-between items-baseline border-b-2 border-primary pb-8 mb-12 flex-wrap gap-4">
+                <h2 class="font-headline-lg text-headline-lg uppercase">
+                    <span class="text-secondary">03.</span> Material Archive
+                </h2>
+                <div class="font-label-caps text-label-caps flex flex-wrap gap-4 md:gap-8">
+                    <span class="text-on-surface-variant">SPECIFICATIONS</span>
+                    <span class="text-on-surface-variant">ORIGIN</span>
+                    <span class="text-on-surface-variant">REF</span>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
+                <div class="space-y-4">
+                    <div
+                        class="group flex flex-col sm:flex-row justify-between items-start sm:items-center py-6 border-b border-surface-container-highest hover:bg-surface-container-low transition-colors px-4 -mx-4 gap-2">
+                        <span class="font-headline-md text-headline-md">Polished Concrete C-40</span>
+                        <span class="font-mono-meta text-mono-meta text-secondary group-hover:underline">VIEW
+                            SPEC_01</span>
+                    </div>
+                    <div
+                        class="group flex flex-col sm:flex-row justify-between items-start sm:items-center py-6 border-b border-surface-container-highest hover:bg-surface-container-low transition-colors px-4 -mx-4 gap-2">
+                        <span class="font-headline-md text-headline-md">Brushed Aircraft Aluminum</span>
+                        <span class="font-mono-meta text-mono-meta text-secondary group-hover:underline">VIEW
+                            SPEC_04</span>
+                    </div>
+                    <div
+                        class="group flex flex-col sm:flex-row justify-between items-start sm:items-center py-6 border-b border-surface-container-highest hover:bg-surface-container-low transition-colors px-4 -mx-4 gap-2">
+                        <span class="font-headline-md text-headline-md">Low-Iron Structural Glass</span>
+                        <span class="font-mono-meta text-mono-meta text-secondary group-hover:underline">VIEW
+                            SPEC_09</span>
+                    </div>
+                    <div
+                        class="group flex flex-col sm:flex-row justify-between items-start sm:items-center py-6 border-b border-surface-container-highest hover:bg-surface-container-low transition-colors px-4 -mx-4 gap-2">
+                        <span class="font-headline-md text-headline-md">Recycled Plywood (Form-work)</span>
+                        <span class="font-mono-meta text-mono-meta text-secondary group-hover:underline">VIEW
+                            SPEC_12</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-gutter">
+                    <div class="relative overflow-hidden aspect-[3/4]">
+                        <img alt="Material Study 1" class="w-full h-full object-cover"
+                            data-alt="Close-up macro photography of polished concrete textures with subtle aggregate visible. The lighting is harsh and direct, creating a high-contrast industrial feel. Tiny orange chalk markings on the concrete surface provide a pop of the brand's signal orange color, emphasizing the technical and architectural nature of the studio's work."
+                            src="assets/images/material-study-1.jpg" />
+                    </div>
+                    <div class="relative overflow-hidden aspect-[3/4] mt-12 md:mt-12">
+                        <img alt="Material Study 2" class="w-full h-full object-cover"
+                            data-alt="A clean architectural photograph showing the intersection of brushed aluminum panels and dark gray steel beams. The lighting is soft and ambient, highlighting the cool metallic tones and precision-engineered edges. The composition is strictly geometric, following a 12-column grid structure inherent in the design system's aesthetic."
+                            src="assets/images/material-study-2.jpg" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter / Contact CTA -->
+        <section class="py-section-padding px-margin-desktop bg-surface-container-highest">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="font-display-lg text-headline-lg-mobile md:text-headline-lg uppercase mb-12">Start a
+                    Narrative.</h2>
+                <form class="flex flex-col md:flex-row gap-8 items-end">
+                    <div class="w-full text-left">
+                        <label class="font-label-caps text-label-caps uppercase mb-4 block">Inquiry Type</label>
+                        <select
+                            class="w-full bg-transparent border-b-2 border-primary py-4 font-body-lg text-body-lg focus:outline-none focus:border-secondary">
+                            <option>Museum Exhibition</option>
+                            <option>Commercial Space</option>
+                            <option>Art Installation</option>
+                        </select>
+                    </div>
+                    <div class="w-full text-left">
+                        <label class="font-label-caps text-label-caps uppercase mb-4 block">Email Address</label>
+                        <input
+                            class="w-full bg-transparent border-b-2 border-primary py-4 font-body-lg text-body-lg focus:outline-none focus:border-secondary"
+                            placeholder="project@client.com" type="email" />
+                    </div>
+                    <button
+                        class="bg-primary text-white font-label-caps text-label-caps uppercase px-12 py-5 hover:bg-secondary transition-colors whitespace-nowrap w-full md:w-auto"
+                        type="submit">
+                        Initiate
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer
+        class="bg-surface-container-highest dark:bg-tertiary-container text-primary dark:text-tertiary-fixed border-t-2 border-primary dark:border-on-primary-fixed-variant flex flex-col md:flex-row justify-between items-center w-full px-margin-desktop py-12 gap-gutter">
+        <div class="font-headline-md text-headline-md text-primary dark:text-tertiary-fixed font-bold">EXHIBIT
+        </div>
+        <div class="font-mono-meta text-mono-meta text-center md:text-left">
+            © 2026 EXHIBIT. HTML Template by <a href="http://templatesjungle.com/" target="_blank"
+                class="underline hover:text-secondary dark:hover:text-secondary-fixed-dim transition-colors duration-200">TemplatesJungle</a>.
+        </div>
+        <div class="flex flex-wrap gap-8 md:gap-12 font-label-caps text-label-caps uppercase justify-center">
+            <a class="text-primary dark:text-tertiary-fixed underline hover:text-secondary dark:hover:text-secondary-fixed-dim transition-colors duration-200"
+                href="#">Legal</a>
+            <a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-secondary dark:hover:text-secondary-fixed-dim transition-colors duration-200"
+                href="#">Instagram</a>
+            <a class="text-on-surface-variant dark:text-on-tertiary-container hover:text-secondary dark:hover:text-secondary-fixed-dim transition-colors duration-200"
+                href="#">LinkedIn</a>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>
